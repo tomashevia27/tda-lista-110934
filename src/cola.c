@@ -1,95 +1,57 @@
 #include "cola.h"
-
-typedef struct nodo{
-	void *elemento;
-	void *nodo_siguiente;
-}nodo_t;
-
-struct _cola_t{
-	struct nodo *principio;
-	struct nodo *final;
-};
+#include "lista.h"
 
 cola_t *cola_crear()
 {
-	cola_t *cola = malloc(sizeof(cola_t));
-	if (cola != NULL){
-		return cola;
-	} else{
-		return NULL;
-	} // CHEQUEAR ESTO!
+	return (cola_t*)lista_crear();
 }
 
 cola_t *cola_encolar(cola_t *cola, void *elemento)
 {
-	if(cola == NULL || elemento == NULL){
+	if(!cola){
 		return NULL;
 	}
-
-	nodo_t *nuevo_nodo = calloc(1, sizeof(struct nodo));
-	nuevo_nodo->elemento = elemento;
-	cola->final->nodo_siguiente = nuevo_nodo;
-	cola->final = nuevo_nodo;
-
-	return cola;
+	return (cola_t*)lista_insertar((lista_t*)cola, elemento);
 }
 
 void *cola_desencolar(cola_t *cola)
 {
-	if(cola == NULL){
+	if(!cola){
 		return NULL;
 	}
 
-	nodo_t *primer_nodo = cola->principio;
-	if(cola->principio == cola->final){
-		cola->principio = NULL;
-		cola->final = NULL;
-	} else{
-		cola->principio = cola->principio->nodo_siguiente;
-	}
-	void *elemento_desencolado = primer_nodo->elemento;
-	primer_nodo->nodo_siguiente = NULL;
-	free(primer_nodo);
+	return lista_quitar_de_posicion((lista_t*)cola, 0);
 
-	return elemento_desencolado;
 }
 
 void *cola_frente(cola_t *cola)
 {
-	if(cola == NULL || cola->principio == NULL){
+	if(!cola){
 		return NULL;
 	}
 
-	return cola->principio->elemento;
+	return lista_primero((lista_t*)cola);
 }
 
-size_t cola_tamanio(cola_t *cola) // complejidad O(n) podria probar usar un int cantidad en cola_t !!!!
+size_t cola_tamanio(cola_t *cola)
 {
-	if(cola == NULL || cola->principio == NULL){
+	if(!cola){
 		return 0;
 	}
-	nodo_t *nodo_actual = cola->principio;
-	size_t nodos_recorridos = 1;
-	while(nodo_actual == cola->final){
-		nodo_actual = nodo_actual->nodo_siguiente;
-		nodos_recorridos++;
-	}
 	
-	return nodos_recorridos;
+	return lista_tamanio((lista_t*)cola);
 }
 
 bool cola_vacia(cola_t *cola)
 {
-	return(cola->principio == NULL && cola->final == NULL);
+	if(!cola){
+		return NULL;
+	}
+
+	return lista_vacia((lista_t*)cola);
 }
 
 void cola_destruir(cola_t *cola)
 {
-	if(cola != NULL){
-		while(!cola_vacia(cola)){
-			void* elemento_desencolado = cola_desencolar(cola);
-			free(elemento_desencolado);
-		}
-		free(cola);
-	}
+	lista_destruir((lista_t*)cola);
 }
