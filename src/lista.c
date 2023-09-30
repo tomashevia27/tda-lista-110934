@@ -156,15 +156,9 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 	} else{
 		struct nodo *nodo_anterior = obtener_nodo_en_posicion(lista, posicion-1);
 		nodo_a_eliminar = nodo_anterior->siguiente;
-		if(nodo_a_eliminar == lista->nodo_final){
-			lista->nodo_final = nodo_anterior;
-		} else{
-			struct nodo *nodo_siguiente = nodo_a_eliminar->siguiente;
-			nodo_anterior->siguiente = nodo_siguiente;
-		}
+		nodo_anterior->siguiente = nodo_a_eliminar->siguiente;
 	}
 
-	nodo_a_eliminar->siguiente = NULL;
 	elemento_retirado = nodo_a_eliminar->elemento;
 	(lista->cantidad_nodos)--;
 	free(nodo_a_eliminar);
