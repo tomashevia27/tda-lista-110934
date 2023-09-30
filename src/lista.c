@@ -9,7 +9,7 @@ struct nodo {
 
 struct lista {
 	struct nodo *nodo_inicio;
-	struct nodo *nodo_final; //consultar esto
+	struct nodo *nodo_final;
 	size_t cantidad_nodos;
 };
 
@@ -135,7 +135,7 @@ void *lista_quitar(lista_t *lista)
 
 void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 {
-	if(!lista || lista_vacia(lista)){
+	if(lista_vacia(lista)){
 		return NULL;
 	}
 
@@ -167,7 +167,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 
 void *lista_elemento_en_posicion(lista_t *lista, size_t posicion)
 {
-	if(!lista){
+	if(lista_vacia(lista)){
 		return NULL;
 	}
 
@@ -176,9 +176,6 @@ void *lista_elemento_en_posicion(lista_t *lista, size_t posicion)
 	}
 
 	struct nodo *nodo_en_posicion = obtener_nodo_en_posicion(lista, posicion);
-	if(!nodo_en_posicion){
-		return NULL;
-	}
 
 	return nodo_en_posicion->elemento;
 }
