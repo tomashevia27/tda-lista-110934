@@ -59,24 +59,24 @@ vector_original = vector;
 
 
 
-# AGREGAR AL INICIO
+# AGREGAR AL FINAL
 <div align="center">
-<img width="70%" src="img/diagrama2.svg">
+<img width="70%" src="img/agregar_final.jpg">
 </div>
 
 # AGREGAR EN CUALQUIER POSICION
 <div align="center">
-<img width="70%" src="img/diagrama2.svg">
-</div>
-
-# ELIMINAR AL INICIO
-<div align="center">
-<img width="70%" src="img/diagrama2.svg">
+<img width="70%" src="img/agregar_cualquiera.jpg">
 </div>
 
 # ELIMINAR AL FINAL
 <div align="center">
-<img width="70%" src="img/diagrama2.svg">
+<img width="70%" src="img/eliminar_final.jpg">
+</div>
+
+# ELIMINAR AL FINAL
+<div align="center">
+<img width="70%" src="img/eliminar_cualquiera.jpg">
 </div>
 
 ---
