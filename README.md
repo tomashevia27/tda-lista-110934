@@ -25,12 +25,6 @@ make valgrind-chanutron
 ---
 ##  Funcionamiento
 
-Explicación de cómo funcionan las estructuras desarrolladas en el TP y el funcionamiento general del mismo.
-
-Aclarar en esta parte todas las decisiones que se tomaron al realizar el TP, cosas que no se aclaren en el enunciado, fragmentos de código que necesiten explicación extra, etc.
-
-Incluír **EN TODOS LOS TPS** los diagramas relevantes al problema (mayormente diagramas de memoria para explicar las estructuras, pero se pueden utilizar otros diagramas si es necesario).
-
 En este TP se desarrollo el funcionamiento de los TDAs Lista, Pila y Cola.
 Se uso la implementacion de Lista para implementar Pila y Cola.
 Basicamente se desarrollaron todas las acciones que pueden realizar estos tipos de datos, sumado a los iteradores externo e interno para la Lista.
@@ -69,6 +63,8 @@ si logra insertar correctamente, aumenta la cantidad de nodos en 1 y devuelve la
 </div>
 
 
+
+
 `lista_insertar_en_posicion` es similar a la anterior en cuanto a reservar la memoria para el nuevo nodo y validar que la lista no sea nula y que la asignacion de memoria no falle, lo que cambia es que recibe un valor con la posicion en la que debe ser insertado el elemento. 
 se recorre la lista hasta encontrar el nodo en la posicion anterior a la que se quiere agregar, luego el nuevo nodo va a apuntar al nodo que le sigue al nodo anterior, y el nodo anterior va a apuntar al nuevo nodo, quedando insertado el nuevo nodo en la posicion correcta. la complejidad de esto es O(n).
 si la posicion es 0, el nuevo nodo va a apuntar al primer nodo de la lista, y lista->nodo_inicio va a apuntar al nuevo nodo, quedando el nuevo nodo en la posicion inicial. la complejidad en este caso es O(1).
@@ -80,6 +76,8 @@ en cualquier caso se aumenta la cantidad de nodos.
 </div>
 
 
+
+
 `lista_quitar` quita el ultimo elemento de una lista, siempre y cuando esta no sea nula y no este vacia.
 si tiene un solo nodo, se devuelve el elemento de ese nodo, el nodo es liberado de la memoria y los nodos inicio y final quedan apuntando a NULL, la cantidad de nodos sera 0. este caso tiene complejidad O(1).
 si tiene mas de un elemento, se recorre la lista hasta llegar al anteultimo nodo, se guarda en una variable auxiliar el nodo a eliminar (el ultimo), luego el anteultimo nodo apunta a NULL, dejando al que era el ultimo nodo afuera de la lista, nodo_final va a apuntar al anteultimo nodo. luego se toma el elemento del nodo a eliminar y se libera este nodo, la cantidad de nodos disminuye en 1. la complejidad es O(n).
@@ -87,6 +85,8 @@ si tiene mas de un elemento, se recorre la lista hasta llegar al anteultimo nodo
 <div align="center">
 <img width="70%" src="img/eliminar_final.jpg">
 </div>
+
+
 
 
 `lista_quitar_de_posicion` similar a la anterior, solo que se le indica la posicion donde se debe eliminar el nodo.
@@ -98,6 +98,8 @@ en los tres casos se disminuye la cantidad de nodos.
 <div align="center">
 <img width="70%" src="img/eliminar_cualquiera.jpg">
 </div>
+
+
 
 
 `lista_elemento_en_posicion` recibe una lista y un valor de posicion. devuelve un puntero al elemento que se encuentra en el nodo de la posicion indicada.
@@ -129,6 +131,7 @@ se encarga de verificar que la lista sea valida, que no este vacia y que la func
 
 ## Respuestas a las preguntas teóricas
 
+
 ### EXPLICACION DE LISTA, PILA y COLA
 Tanto la lista, como la pila y la cola, son TDAs que sirven para agrupar elementos. son similares en algunos aspectos pero diferentes en otros.
 La lista agrupa los elementos desde un elemento que es el inicial, hasta el elemento final, todos los elementos tienen un elemento anterior (salvo el inicial) y un sucesor (salvo el final), en la lista se puede acceder a todos los elementos de la misma, se pueden quitar, agregar y obtener elementos en cualquier posicion de la lista.
@@ -144,19 +147,24 @@ para los 3 tdas en este programa se uso la misma estructura lista_t, donde para 
 </div>
 
 
+
+
 ### COMPLEJIDAD LISTA SIMPLEMENTE ENLAZADA
   - como al primer nodo se puede acceder directamente, tanto insertar, como obtener y eliminar al inicio son O(1)
   - como en mi implementacion use una referencia al nodo final, puedo acceder directamente a ese nodo, entonces insertar y obtener al final son O(1), eliminar al final en cambio es O(n) ya que debe recorrer todos los nodos de la lista hasta obtener el anteultimo nodo.
   - tanto insertar, como obtener y eliminar al medio son O(n) ya que deberia recorrer los nodos anteriores de la lista hasta llegar al nodo en la posicion requerida (obtener) o al nodo anterior (insertar y eliminar)
 
+
 ### COMPLEJIDAD LISTA DOBLEMENTE ENLAZADA
  - las operaciones al inicio y final tienen la misma complejidad que la simplemente enlazada, la que se modifica es la de eliminar al final, en esta implementacion esta operacion es O(1) ya que desde el nodo final puedo acceder directamente al anteultimo nodo y asi eliminar el nodo final.
  - tanto insertar, como obtener y eliminar en el medio siguen siendo O(n), ya que por mas que arranquemos a recorrer en el inicio o el final, deberiamos recorrer una cantidad de nodos del vector, en el peor de los casos podriamos llegar a recorrer todo el vector.
+
 
 ### COMPLEJIDAD LISTA CON VECTOR DINAMICO
   - tanto para insertar como para eliminar al inicio se debe recorrer el vector para reacomodar los elementos, por lo tanto son O(n). obtener al inicio es O(1)
   - para insertar al final pueden ocurrir dos cosas, que el vector tenga lugar para insertar,ahi seria O(1), o que se haya llenado el vector y se deba agrandar usando realloc, aca seria O(n). obtener y eliminar al final son O(1) si se tiene una referencia al ultimo elemento. 
   - insertar, obtener y eliminar en el medio son O(n)
+
 
 
 ### COMPLEJIDAD DE LAS FUNCIONES DE PILA y COLA
