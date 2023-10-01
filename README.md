@@ -61,7 +61,7 @@ si logra insertar correctamente, aumenta la cantidad de nodos en 1 y devuelve la
 <div align="center">
 <img width="70%" src="img/agregar_final.jpg">
 </div>
-
+---
 
 
 
@@ -74,7 +74,7 @@ en cualquier caso se aumenta la cantidad de nodos.
 <div align="center">
 <img width="70%" src="img/agregar_cualquiera.jpg">
 </div>
-
+---
 
 
 
@@ -85,7 +85,7 @@ si tiene mas de un elemento, se recorre la lista hasta llegar al anteultimo nodo
 <div align="center">
 <img width="70%" src="img/eliminar_final.jpg">
 </div>
-
+---
 
 
 
@@ -98,7 +98,7 @@ en los tres casos se disminuye la cantidad de nodos.
 <div align="center">
 <img width="70%" src="img/eliminar_cualquiera.jpg">
 </div>
-
+---
 
 
 
@@ -139,15 +139,13 @@ En pila y cola no se puede acceder a todos los elementos de ellas.
 La cola se caracteriza por utilizar la politica FIFO (el primero que entra, es el primero que sale). Solo se puede acceder al primer elemento de la cola, y se puede agregar solo al inicio y eliminar el primer elemento (si quisiera eliminar el ultimo elemento, primero se deben eliminar todos los anteriores)
 La pila, usa la politica LIFO (ultimo que entra, primer que sale), al contrario que en la cola, solo se puede acceder al ultimo elemento, se puede insertar solo al final y eliminar el ultimo (mismo caso, si quiero obtener el primer elemento que se agrego, primero debo quitar todo los elementos posteriores). En mi implementacion uso el nodo_inicial como tope.
 
-para los 3 tdas en este programa se uso la misma estructura lista_t, donde para pila y cola solo se usaron las funciones necesarias para que cumplan con las caracteristicas antes mencionadas (agregar, quitar y obtener en el ultimo elemento para la pila y en el primero para la cola)
+para los 3 tdas en este programa se uso la misma estructura lista_t, donde para pila y cola solo se usaron las funciones necesarias para que cumplan con las caracteristicas antes mencionadas.
 
 ### DIAGRAMA DE MEMORIA USADO PARA LISTA, PILA y COLA:
 <div align="center">
 <img width="70%" src="img/diagrama_memoria.jpg">
 </div>
-
-
-
+---
 
 ### COMPLEJIDAD LISTA SIMPLEMENTE ENLAZADA
   - como al primer nodo se puede acceder directamente, tanto insertar, como obtener y eliminar al inicio son O(1)
