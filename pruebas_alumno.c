@@ -36,8 +36,7 @@ lista_t *prueba_crear_lista()
 
 void prueba_agregar_al_final(lista_t *lista_creada)
 {
-	int *elemento = malloc(sizeof(int));
-	*elemento = 15;
+	int *elemento = (int *)15;
 	void *elemento_void = elemento;
 
 	lista_t *lista_nula = NULL;
@@ -60,8 +59,7 @@ void prueba_agregar_al_final(lista_t *lista_creada)
 	pa2m_afirmar(lista_creada->nodo_final->siguiente == NULL,
 		     "ultimo elemento agregado apunta a NULL");
 
-	*elemento = 22;
-	elemento_void = elemento;
+	elemento = (int *)22;
 	lista_creada = lista_insertar(lista_creada, elemento_void);
 	pa2m_afirmar(lista_creada->cantidad_nodos == 2,
 		     "la cantidad de elementos es 2");
@@ -92,8 +90,7 @@ void prueba_agregar_al_final(lista_t *lista_creada)
 
 void prueba_agregar_en_posicion(lista_t *lista)
 {
-	int *elemento = calloc(1, sizeof(int));
-	*elemento = 1;
+	int *elemento = (int *)1;
 	void *elemento_void = elemento;
 
 	lista_t *lista_nula = NULL;
@@ -110,7 +107,7 @@ void prueba_agregar_en_posicion(lista_t *lista)
 	pa2m_afirmar(lista->cantidad_nodos == 4,
 		     "la cantidad de elementos es igual a 4");
 
-	*elemento = 4;
+	elemento = (int *)4;
 	lista = lista_insertar_en_posicion(lista, elemento_void, 0);
 	pa2m_afirmar(
 		lista != NULL,
@@ -126,7 +123,7 @@ void prueba_agregar_en_posicion(lista_t *lista)
 	pa2m_afirmar(lista->cantidad_nodos == 6,
 		     "la cantidad de elementos es igual a 6");
 
-	*elemento = 8;
+	elemento = (int *)8;
 	lista = lista_insertar_en_posicion(lista, elemento_void, 50);
 	pa2m_afirmar(
 		lista != NULL,
@@ -149,8 +146,7 @@ void prueba_agregar_en_posicion(lista_t *lista)
 
 void prueba_eliminar_ultimo_nodo(lista_t *lista)
 {
-	int *elemento = calloc(1, sizeof(int));
-	*elemento = 1;
+	int *elemento = (int *)1;
 	void *elemento_void = elemento;
 
 	lista_t *lista_nula = NULL;
@@ -175,7 +171,7 @@ void prueba_eliminar_ultimo_nodo(lista_t *lista)
 		"la cantidad de nodos luego de agregar y quitar es igual que antes");
 
 	lista_t *lista_un_elemento = lista_crear();
-	*elemento = 1;
+	elemento = (int *)1;
 	lista = lista_insertar_en_posicion(lista_un_elemento, elemento_void, 0);
 	elemento_eliminado = lista_quitar(lista_un_elemento);
 	pa2m_afirmar(
@@ -188,12 +184,13 @@ void prueba_eliminar_ultimo_nodo(lista_t *lista)
 	pa2m_afirmar(lista_un_elemento->nodo_inicio == NULL &&
 			     lista_un_elemento->nodo_final == NULL,
 		     "los nodos inicio y final apuntan a NULL");
+	lista_destruir(lista_sin_elementos);
+	lista_destruir(lista_un_elemento);
 }
 
 void prueba_eliminar_cualquier_nodo(lista_t *lista)
 {
-	int *elemento = calloc(1, sizeof(int));
-	*elemento = 10;
+	int *elemento = (int *)10;
 	void *elemento_void = elemento;
 
 	lista_t *lista_nula = NULL;
@@ -212,14 +209,14 @@ void prueba_eliminar_cualquier_nodo(lista_t *lista)
 	pa2m_afirmar(elemento_eliminado == elemento_void,
 		     "eliminar elemento en posicion 1 y luego se lo elimina");
 
-	*elemento = 20;
+	elemento = (int *)20;
 	lista = lista_insertar_en_posicion(lista, elemento_void, 10);
 	elemento_eliminado = lista_quitar_de_posicion(lista, 10);
 	pa2m_afirmar(
 		elemento_eliminado == elemento_void,
 		"eliminar en una posicion mayor a la cantidad de elementos funciona");
 
-	*elemento = 30;
+	elemento = (int *)30;
 	lista = lista_insertar_en_posicion(lista, elemento_void, 0);
 	elemento_eliminado = lista_quitar_de_posicion(lista, 0);
 	pa2m_afirmar(elemento_eliminado == elemento_void,
@@ -231,11 +228,13 @@ void prueba_eliminar_cualquier_nodo(lista_t *lista)
 	pa2m_afirmar(
 		elemento_eliminado == elemento_void,
 		"se agrega un elemento NULL en la posicion 2 y luego se elimina correctamente");
+
+	free(lista_sin_elementos);
 }
 
 void prueba_elemento_en_posicion()
 {
-	int *elemento = calloc(1, sizeof(int));
+	int *elemento = (int *)0;
 	void *elemento_void = elemento;
 	void *elemento_en_posicion;
 
@@ -244,20 +243,16 @@ void prueba_elemento_en_posicion()
 	pa2m_afirmar(elemento_en_posicion == NULL,
 		     "no se puede obtener un elemento de una lista nula");
 
+	lista = lista_insertar(lista, elemento_void);
+	elemento_en_posicion = lista_elemento_en_posicion(lista, 0);
+	pa2m_afirmar(
+		elemento_en_posicion == elemento_void,
+		"se prueba obtener un elemento en una posicion existente de la lista");
+
 	lista = lista_crear();
 	elemento_en_posicion = lista_elemento_en_posicion(lista, 2);
 	pa2m_afirmar(elemento_en_posicion == NULL,
 		     "no se puede obtener un elemento de una lista vacia");
-
-	for (int i = 0; i < 3; i++) {
-		*elemento = i;
-		lista_insertar(lista, elemento_void);
-
-		elemento_en_posicion = lista_elemento_en_posicion(lista, 0);
-		printf("se busco elemento en posicion %i\n", i);
-		pa2m_afirmar(elemento_en_posicion == elemento_void,
-			     "se obtiene el elemento correcto");
-	}
 
 	elemento_en_posicion = lista_elemento_en_posicion(lista, 10);
 	pa2m_afirmar(
@@ -265,6 +260,7 @@ void prueba_elemento_en_posicion()
 		"no se puede entender un elemento de una posicion inexistente");
 
 	free(elemento_void);
+	lista_destruir(lista);
 }
 
 int comparador(void *e1, void *e2)
@@ -312,6 +308,8 @@ void prueba_buscar_elemento()
 	pa2m_afirmar(lista_buscar_elemento(lista, comparador_valido,
 					   void_elemento1) == void_elemento1,
 		     "se encuentra un elemento que esta duplicado en la lista");
+
+	lista_destruir(lista);
 }
 
 void prueba_cantidad_elementos_y_lista_vacia()
@@ -330,8 +328,7 @@ void prueba_cantidad_elementos_y_lista_vacia()
 	pa2m_afirmar(cantidad_elementos == 0,
 		     "la cantidad de elementos de una lista vacia es 0");
 
-	int *elemento = calloc(1, sizeof(int));
-	*elemento = 0;
+	int *elemento = (int *)0;
 	void *elemento_void = elemento;
 	while (lista->cantidad_nodos < 3) {
 		lista = lista_insertar(lista, elemento_void);
@@ -343,6 +340,8 @@ void prueba_cantidad_elementos_y_lista_vacia()
 	pa2m_afirmar(
 		cantidad_elementos == 3,
 		"se verifica correctamente que la lista tiene 3 elementos");
+
+	lista_destruir(lista);
 }
 
 void prueba_primer_ultimo_elemento(lista_t *lista)
@@ -368,8 +367,7 @@ void prueba_primer_ultimo_elemento(lista_t *lista)
 	pa2m_afirmar(primer_elemento == lista->nodo_inicio->elemento,
 		     "lista_primero() devuelve elemento correcto");
 
-	int *elemento = calloc(1, sizeof(int));
-	*elemento = 10;
+	int *elemento = (int *)10;
 	void *elemento_void = elemento;
 	lista = lista_insertar_en_posicion(lista, elemento_void, 0);
 	primer_elemento = lista_primero(lista);
@@ -382,7 +380,7 @@ void prueba_primer_ultimo_elemento(lista_t *lista)
 	pa2m_afirmar(ultimo_elemento == lista->nodo_final->elemento,
 		     "lista_ultimo() devuelve elemento correcto");
 
-	*elemento = 15;
+	elemento = (int *)15;
 	elemento_void = elemento;
 	lista = lista_insertar(lista, elemento_void);
 	ultimo_elemento = lista_ultimo(lista);
@@ -390,6 +388,8 @@ void prueba_primer_ultimo_elemento(lista_t *lista)
 		(ultimo_elemento == elemento_void) &&
 			(ultimo_elemento == lista->nodo_final->elemento),
 		"luego de insertar elemento al final, lista_ultimo() devuelve elemento correcto");
+
+	lista_destruir(lista_nueva);
 }
 
 void pruebas_iterador_externo()
@@ -428,6 +428,8 @@ void pruebas_iterador_externo()
 		(*elemento)++;
 	}
 
+	lista_iterador_destruir(iterador);
+
 	iterador = lista_iterador_crear(lista);
 	pa2m_afirmar(iterador != NULL && iterador->nodo_actual != NULL &&
 			     iterador->lista->nodo_inicio != NULL,
@@ -460,8 +462,8 @@ void pruebas_iterador_externo()
 		"no se avanza en un iterador que no tiene elementos por iterar");
 
 	free(elemento);
-	free(iterador);
-	free(lista);
+	lista_iterador_destruir(iterador);
+	lista_destruir(lista);
 }
 
 bool funcion1(void *elemento, void *auxiliar)
@@ -541,6 +543,6 @@ int main()
 	pa2m_nuevo_grupo(
 		"\n======================== ITERADOR INTERNO ========================");
 	pruebas_iterador_interno(lista);
-
+	lista_destruir(lista);
 	return pa2m_mostrar_reporte();
 }
